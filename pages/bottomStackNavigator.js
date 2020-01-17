@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Home from './home/Home';
-import Search from './search/search';
+import Search from '../search/search';
 import { Footer, FooterTab,  Button, Icon } from 'native-base';
 import {Text, StyleSheet} from 'react-native';
 import { createAppContainer } from 'react-navigation';
@@ -12,6 +12,7 @@ const BottomStackNavigator = createBottomTabNavigator({
     Search : {screen : Search}
 },{
     initialRouteName : "Home",
+    lazy : true,
     tabBarOptions :{
         activeTintColor : "red",
         activeBackgroundColor : "#e6891d"
