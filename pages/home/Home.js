@@ -50,18 +50,28 @@ export default function Home() {
             <Text style={{flex : 1 , fontSize : 20 , justifyContent : "center" , alignContent : "center" , alignItems : "center" , flexWrap : "wrap" , textAlign: "center" , marginTop : 20}}>
                 Discover
             </Text>
-            <View style={style.Container}>
+            
             <ScrollView 
                 horizontal
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
+                disableIntervalMomentum
+                tvParallaxShiftDistanceX={300}
             >
+            <View style={style.Container}>
+            <Image source={Joker}  style={{flex: 1 ,justifyContent : "center" , alignSelf : "center" , alignItems : "center" , width : 300 , height : 200 , borderRadius : 20 , marginTop : 50}} />
+            <Text style={style.text}>
+                Joker
+            </Text>
+            </View>
+            <View style={style.Container}>
             <Image source={Joker} style={{width : 300 , height : 200 , borderRadius : 20 , marginTop : 50}}/>
             <Text style={style.text}>
                 Joker
             </Text>
-            </ScrollView>
             </View>
+            </ScrollView>
+            
             <Text style={{position : "relative" ,top : 0 , left : 0  ,marginTop : 15 , fontSize : 20 , flex : 1 , justifyContent: "flex-start" , flexWrap : "wrap"  , alignContent : "flex-start" , alignItems: "flex-start" , margin : 15 }}>
                 Top Picks
             </Text>
@@ -93,9 +103,10 @@ const style = StyleSheet.create({
     Container : {
         flex : 1,
        justifyContent : "center",
-       alignContent : "flex-end",
+       alignContent : "center",
        alignItems : "center",
-       alignSelf : "center"
+       alignSelf : "center",
+       marginHorizontal : 10
     },
     text:{
         backgroundColor : "white",
