@@ -1,5 +1,5 @@
 import React from 'react'
-import {View , Text , FlatList, Image, StyleSheet ,  ScrollView } from 'react-native';
+import {View , Text , FlatList, Image, StyleSheet ,  ScrollView, Dimensions } from 'react-native';
 import { TouchableOpacity} from 'react-native-gesture-handler';
 import Joker from './poster/joker.jpg';
 import KGF from './poster/kgf.jpg';
@@ -41,7 +41,25 @@ export default function Home() {
             id : 6
         }
 
+    ]);
+
+    const [topBanner , setBanner] = React.useState([
+        // {
+        //     title : "Joker",
+        //     image : Joker,
+        //     id : 1
+        // },
+        {
+            title : "The Dark Knight",
+            image : 'https://i.pinimg.com/originals/cc/47/a5/cc47a507854dfe4ea145ebb4c9ae51c4.jpg',
+            id : 2
+        },{
+            title : "Ford V Ferrari",
+            image : 'https://images-na.ssl-images-amazon.com/images/I/71MJJWD2UrL._SL1500_.jpg',
+            id : 3
+        }
     ])
+
     return (
         <ScrollView>
        
@@ -58,18 +76,20 @@ export default function Home() {
                 disableIntervalMomentum
                 tvParallaxShiftDistanceX={300}
             >
-            <View style={style.Container}>
-            <Image source={Joker}  style={{flex: 1 ,justifyContent : "center" , alignSelf : "center" , alignItems : "center" , width : 300 , height : 200 , borderRadius : 20 , marginTop : 50}} />
-            <Text style={style.text}>
-                Joker
-            </Text>
-            </View>
-            <View style={style.Container}>
-            <Image source={Joker} style={{width : 300 , height : 200 , borderRadius : 20 , marginTop : 50}}/>
-            <Text style={style.text}>
-                Joker
-            </Text>
-            </View>
+                {
+                    
+                        topBanner.map(item=>{
+                                return(
+                                    <View style={style.Container} key={item.id}>
+                                    <Image source={{uri : item.image}}  style={{flex: 1 ,justifyContent : "center" , alignSelf : "center" , alignItems : "center" , width : 300 , height : 200 , borderRadius : 20 , marginTop : 50}} />
+                                    <Text style={style.text}>
+                                        {item.title}
+                                    </Text>
+                                    </View>
+                                )
+                        })
+                    
+                }
             </ScrollView>
             
             <Text style={{position : "relative" ,top : 0 , left : 0  ,marginTop : 15 , fontSize : 20 , flex : 1 , justifyContent: "flex-start" , flexWrap : "wrap"  , alignContent : "flex-start" , alignItems: "flex-start" , margin : 15 }}>
@@ -102,11 +122,13 @@ export default function Home() {
 const style = StyleSheet.create({
     Container : {
         flex : 1,
+        width : Dimensions.get('window').width,
        justifyContent : "center",
        alignContent : "center",
        alignItems : "center",
        alignSelf : "center",
-       marginHorizontal : 10
+       marginHorizontal : "auto"
+       
     },
     text:{
         backgroundColor : "white",
