@@ -5,11 +5,12 @@ import Search from '../search/search';
 import { Footer, FooterTab,  Button, Icon } from 'native-base';
 import {Text, StyleSheet} from 'react-native';
 import { createAppContainer } from 'react-navigation';
-
+import Details from '../search/fullMovie'
 
 const BottomStackNavigator = createBottomTabNavigator({
     Home : {screen : Home},
-    Search : {screen : Search}
+    Search : {screen : Search},
+    Details : {screen : Details}
 },{
     initialRouteName : "Home",
     lazy : true,
