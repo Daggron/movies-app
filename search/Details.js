@@ -1,7 +1,7 @@
 import React from 'react';
 import {View , Text } from 'react-native';
 
-const Details = ()=>{
+function Details(){
     return(
         <View>
             <Text>Hello From Full Details</Text>

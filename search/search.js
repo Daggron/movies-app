@@ -4,7 +4,7 @@ import SearchBar from './searchBar'
 import Axios from 'axios';
 import DisplayMovie from './DisplayMovie';
 
-export default function Search() {
+export default function Search(props) {
     const [movie , setMovie] = React.useState("");
     const [searchMovies , setSearchMovies ] = React.useState([]);
 
@@ -29,7 +29,7 @@ export default function Search() {
 
             <View style={style.container}>
                <SearchBar handleChange={handleChange} searchMovie={searchMovie}/>
-               <DisplayMovie movies={searchMovies} />
+               <DisplayMovie movies={searchMovies} navigation={props.navigation} />
             </View>
        
         )

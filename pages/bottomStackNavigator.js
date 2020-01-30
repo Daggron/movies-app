@@ -5,7 +5,7 @@ import Search from '../search/search';
 import { Footer, FooterTab,  Button, Icon } from 'native-base';
 import {Text, StyleSheet} from 'react-native';
 import { createAppContainer } from 'react-navigation';
-import Details from '../search/fullMovie'
+import Details from '../search/Details';
 
 const BottomStackNavigator = createBottomTabNavigator({
     Home : {screen : Home},
