@@ -1,12 +1,140 @@
 import React from 'react';
-import {View , Text } from 'react-native';
+import {View , Text , Image, Dimensions } from 'react-native';
+import Axios from 'axios';
+import { ScrollView } from 'react-native-gesture-handler';
 
-function Details(){
-    return(
-        <View>
-            <Text>Hello From Full Details</Text>
-        </View>
-    )
+function Details(props){
+
+    const [movie,setMovie] = React.useState({});
+    const [Rating , setRating] = React.useState([]);
+
+    React.useEffect(()=>{
+        const title = props.navigation.getParam('title');
+        console.log(title);
+        Axios.get(`http://www.omdbapi.com/?apikey=19a92861&t=${title}&plot=full`)
+        .then(res=>{
+            setMovie(res.data);
+            // console.log(res.data);
+            setRating(res.data.Ratings);
+        })
+        .catch(err=>{
+            alert('No Data Found')
+            console.log(err);
+        })
+    },[])
+    
+    if(movie){
+        return(
+            <ScrollView
+                scrollEnabled
+                showsVerticalScrollIndicator={false}
+            >
+                <View style={{backgroundColor : "#f5f5f5" }}>
+                    <Image source={{uri : movie.Poster}} resizeMode="cover" blurRadius={1} style={{ width : Dimensions.get('window').width , height : 300}}/>
+                    <View style={{ padding : 20 , backgroundColor : "#f5f5f5" , marginTop : -50 , borderTopLeftRadius : 50 , borderTopRightRadius : 50 , width : Dimensions.get('window').width}}>
+                        <Text style={{fontSize: 20 , textAlign :"center" }}>
+                            {
+                                movie.Title
+                            }
+                        </Text>
+                        <Text style={{fontSize : 12 , textAlign : "center" , marginTop : 15}}>
+                            {
+                                movie.Genre
+                            }
+                        </Text>
+                        <Text style={{fontSize : 12 , textAlign : "center" , marginTop : 15}}>
+                            Director: {
+                                movie.Director
+                            }
+                        </Text>
+                        <Text style={{fontSize : 12 , textAlign : "center" , marginTop : 15}}>
+                           Rated: {
+                                movie.Rated
+                            }
+                        </Text>
+                    </View>
+                    <View>
+                        <Text style={{fontSize : 20 , marginTop : 20  , paddingHorizontal : 20}}>
+                            Plot
+                        </Text>
+                        <Text style={{fontSize : 15 , color : "#757575" ,  lineHeight : 30 , marginTop : 15 , paddingLeft : 20 , paddingRight : 20 , paddingBottom : 10 , textAlign : "justify"}}>
+                            {
+                                movie.Plot
+                            }
+                        </Text>
+                    </View>
+                    <View style={{paddingHorizontal : 20 }}>
+                        <Text style={{fontSize : 20  , paddingTop : 10}}>
+                            Actors
+                        </Text>
+                        <Text style={{color : "#757575" , fontSize : 15 , marginTop : 5 , lineHeight : 30}}>
+                            {
+                                movie.Actors
+                            }
+                        </Text>
+                        <Text style={{marginTop : 20  , fontSize : 20}}>
+                            Writers
+                       </Text>
+                       
+                       <Text style={{marginTop : 10 , color : "#757575" , fontSize : 15}}>
+                            {movie.Writer}
+                       </Text>
+                    </View>
+
+        
+                    <View style={{padding : 20}}>
+                        <Text style={{fontSize : 20}}>Ratings</Text>
+                            {
+                                Rating.map(eachRating=>{
+                                    return(
+                                        <View>
+                                           <Text style={{color:"#757575" , marginTop : 10 , fontSize : 15}}>{eachRating.Source} , {eachRating.Value}</Text>
+                                        </View>
+                                    )
+                                })
+                            }
+
+
+                       <Text style={{marginTop : 20  , fontSize : 20}}>
+                            Released Year
+                       </Text>
+                       
+                       <Text style={{marginTop : 10 , color : "#757575" , fontSize : 15}}>
+                            {movie.Released}
+                       </Text>
+
+                       <Text style={{marginTop : 20  , fontSize : 20}}>
+                            Run Time
+                       </Text>
+                       
+                       <Text style={{marginTop : 10 , color : "#757575" , fontSize : 15}}>
+                            {movie.Runtime}
+                       </Text>
+
+
+                       <Text style={{marginTop : 20  , fontSize : 20}}>
+                            Box Office
+                       </Text>
+                       
+                       <Text style={{marginTop : 10 , color : "#757575" , fontSize : 15}}>
+                            {movie.BoxOffice}
+                       </Text>
+
+                       
+
+                    </View>
+                </View>
+            </ScrollView>
+        )
+    }else{
+        return(
+            <View>
+                <Text>
+                    Loading.....
+                </Text>
+            </View>
+        )
+    }
 }
 
 export default Details;

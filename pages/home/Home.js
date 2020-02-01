@@ -44,11 +44,7 @@ export default function Home() {
     ]);
 
     const [topBanner , setBanner] = React.useState([
-        // {
-        //     title : "Joker",
-        //     image : Joker,
-        //     id : 1
-        // },
+        
         {
             title : "The Dark Knight",
             image : 'https://i.pinimg.com/originals/cc/47/a5/cc47a507854dfe4ea145ebb4c9ae51c4.jpg',

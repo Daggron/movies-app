@@ -11,7 +11,7 @@ export default function DisplayMovie(props){
                     showsVerticalScrollIndicator={false}
                     renderItem={({item})=>{
                         return(
-                            <TouchableOpacity onPress={()=>props.navigation.navigate('Details')}>
+                            <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{title : `${item.Title}`})}>
                                 <View style={{ marginTop : 10 , marginHorizontal : 5}}>
                                     <Image source={{uri : item.Poster}} style={{height : 200 , width : 150}} />
                                     <Text style={{maxWidth : 150 , textAlign : "center"}}>
