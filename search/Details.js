@@ -1,6 +1,7 @@
 import React from 'react';
-import {View , Text , Image, Dimensions } from 'react-native';
+import {View , Text , ImageBackground , Image , Dimensions, StatusBar } from 'react-native';
 import Axios from 'axios';
+import {Spinner } from 'native-base';
 import { ScrollView } from 'react-native-gesture-handler';
 
 function Details(props){
@@ -9,9 +10,14 @@ function Details(props){
     const [Rating , setRating] = React.useState([]);
     const [title , setTitle] = React.useState(props.navigation.getParam('title'));
 
+    if(props.navigation.getParam('title')!==title){
+        let data = props.navigation.getParam('title')
+        setTitle(data)
+    }
+    
+
     React.useEffect(()=>{
         // const title = props.navigation.getParam('title');
-        console.log(title);
         Axios.get(`http://www.omdbapi.com/?apikey=19a92861&t=${title}&plot=full`)
         .then(res=>{
             setMovie(res.data);
@@ -25,18 +31,20 @@ function Details(props){
     },[title])
 
     if(props.navigation.getParam('title')!==title){
-        let data = props.navigation.getParam('title')
-        setTitle(data)
-    }
-    
-    if(movie){
         return(
-            <ScrollView
-                scrollEnabled
-                showsVerticalScrollIndicator={false}
-            >
+            <Spinner />
+        )
+    }
+  
+    else if(movie.Title===title){
+        return(
+            <ScrollView>
+                <StatusBar hidden={true}/>
                 <View style={{backgroundColor : "#f5f5f5" }}>
-                    <Image source={{uri : movie.Poster}} resizeMode="cover" blurRadius={1} style={{ width : Dimensions.get('window').width , height : 300}}/>
+                     <Image source={{uri : movie.Poster}} resizeMode="cover" blurRadius={1} style={{ width : Dimensions.get('window').width , height : 300}}/>
+
+                    
+
                     <View style={{ flex : 1 , justifyContent : "space-between", alignContent : "center", flexDirection : "row"  , flexWrap : "wrap" , padding : 20 , backgroundColor : "#f5f5f5" , marginTop : -50 , borderTopLeftRadius : 50 , borderTopRightRadius : 50 , width : Dimensions.get('window').width}}>
                         
                         <Image source={{uri : movie.Poster}} resizeMode="contain" style={{height : 200 , width :110}}/>
@@ -99,7 +107,7 @@ function Details(props){
                                 Rating.map(eachRating=>{
                                     return(
                                         <View>
-                                           <Text style={{color:"#757575" , marginTop : 10 , fontSize : 15}}>{eachRating.Source} , {eachRating.Value}</Text>
+                                           <Text style={{color:"#757575" , marginTop : 10 , fontSize : 15}}>{eachRating.Source} - {eachRating.Value}</Text>
                                         </View>
                                     )
                                 })
@@ -130,9 +138,6 @@ function Details(props){
                        <Text style={{marginTop : 10 , color : "#757575" , fontSize : 15}}>
                             {movie.BoxOffice}
                        </Text>
-
-                       
-
                     </View>
                 </View>
             </ScrollView>
@@ -140,8 +145,9 @@ function Details(props){
     }else{
         return(
             <View>
-                <Text>
-                    Loading.....
+                <Spinner />
+                <Text style={{fontSize: 20 , textAlign : "center"}}>
+                   Loading ...
                 </Text>
             </View>
         )

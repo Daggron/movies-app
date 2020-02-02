@@ -1,6 +1,5 @@
 import React from 'react'
-import {View , Text , FlatList, Image, StyleSheet ,  ScrollView, Dimensions } from 'react-native';
-import { TouchableOpacity} from 'react-native-gesture-handler';
+import {View , Text , FlatList, Image, StyleSheet ,  ScrollView, Dimensions , TouchableOpacity } from 'react-native';
 import Joker from './poster/joker.jpg';
 import KGF from './poster/kgf.jpg';
 import Inception from './poster/inception.jpg'
@@ -8,7 +7,7 @@ import Shutter from './poster/shutter.jpg';
 import John from './poster/johnwick.jpg';
 import Endgame from './poster/endgame.jpg';
 
-export default function Home() {
+export default function Home(props) {
     const [movie , setMovie] = React.useState([
         {
             title : "Joker",
@@ -36,7 +35,7 @@ export default function Home() {
             id : 5
         },
         {
-            title : "Avengers : Endgame",
+            title : "Avengers: Endgame",
             image : Endgame,
             id : 6
         }
@@ -91,23 +90,24 @@ export default function Home() {
             <Text style={{position : "relative" ,top : 0 , left : 0  ,marginTop : 15 , fontSize : 20 , flex : 1 , justifyContent: "flex-start" , flexWrap : "wrap"  , alignContent : "flex-start" , alignItems: "flex-start" , margin : 15 }}>
                 Top Picks
             </Text>
-            <TouchableOpacity>
+            
                 <FlatList 
                 showsHorizontalScrollIndicator={false}
                 keyExtractor = {item => item.id}
                 horizontal={true}              
                 data={movie} renderItem={({item})=>{
                     return(
+                        <TouchableOpacity onPress={()=>props.navigation.navigate('Details',{title : `${item.title}`})}>
                             <View>
                                 <Image source={item.image} style={{height : 200 , width : 150 , borderRadius : 5 , marginLeft : 15 , marginTop : 15}}/>
                                 <Text style={{flex : 1 , textAlign : "center"}}>
                                     {item.title}
                                 </Text>
                             </View>
+                        </TouchableOpacity>
                     )
                 }}
                 />
-            </TouchableOpacity>
         </View>
         </ScrollView>
     )
